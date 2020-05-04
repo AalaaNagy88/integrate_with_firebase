@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'login_screen.dart';
+import 'package:integratewithfirebase/Screens/home_screen.dart';
+import 'package:integratewithfirebase/Screens/login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'My project',
-      debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
-    );
-  }
+Future<void> main() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var status = prefs.getBool('alreadyLogin') ?? false;
+  runApp(MaterialApp(home: status == true ? HomeScreen() : LoginScreen(),debugShowCheckedModeBanner: false,));
 }
